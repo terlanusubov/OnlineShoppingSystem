@@ -1,0 +1,228 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- Mirrored from demos.ui-lib.com/gull/html/layout1/dashboard1.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 20 Jul 2020 19:30:10 GMT -->
+<!-- Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Idarə paneli</title>
+    <link href="~/dist-assets/css/main.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/c12ff64bc1.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,800,900" rel="stylesheet" />
+    <link href="~/dist-assets/css/themes/lite-purple.min.css" rel="stylesheet" />
+    <link href="~/dist-assets/css/plugins/perfect-scrollbar.min.css" rel="stylesheet" />
+</head>
+
+<body class="text-left">
+    <div class="app-admin-wrap layout-sidebar-large">
+        <div class="main-header">
+            <div class="logo">
+                <img src="~/logo.png" alt="">
+            </div>
+            <div class="menu-toggle">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="d-flex align-items-center">
+            </div>
+            <div style="margin: auto"></div>
+            <div class="header-part-right">
+                <!-- Full screen toggle -->
+                <i class="i-Full-Screen header-icon d-none d-sm-inline-block" data-fullscreen></i>
+                <!-- Grid menu Dropdown -->
+                <!-- User avatar dropdown -->
+                <div class="dropdown">
+                    <div class="user col align-self-end">
+                        <img src="~/logo.png" id="userDropdown" alt="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @*<img src="@Context.User.Claims.Where(c=>c.Type == "admin_photo").FirstOrDefault().Value" id="userDropdown" alt="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">*@
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="@Url.Action("Logout","Account")">Çıxış</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="side-content-wrap">
+            <div class="sidebar-left open rtl-ps-none" data-perfect-scrollbar="" data-suppress-scroll-x="true">
+                <ul class="navigation-left">
+                    <li class="nav-item" data-item="dashboard">
+                        <a class="nav-item-hold" href="@Url.Action("Index","Home")"><i class="nav-icon i-Bar-Chart"></i><span class="nav-text">Ana səhifə</span></a>
+                        <div class="triangle"></div>
+                    </li>
+                    <li class="nav-item" data-item="uikits">
+                        <a class="nav-item-hold" href="@Url.Action("List","Product")"><i class="nav-icon i-Library"></i><span class="nav-text">Məhsullar</span></a>
+                        <div class="triangle"></div>
+                    </li>
+                    <li class="nav-item" data-item="extrakits">
+                        <a class="nav-item-hold" href="@Url.Action("List","Packet")"><i class="nav-icon i-Suitcase"></i><span class="nav-text">Bağlamalar</span></a>
+                        <div class="triangle"></div>
+                    </li>
+                </ul>
+            </div>
+            <div class="sidebar-overlay"></div>
+        </div>
+        <!-- =============== Left side End ================-->
+        <div class="main-content-wrap sidenav-open d-flex flex-column">
+            <!-- ============ Body content start ============= -->
+            <div class="main-content">
+
+                @RenderBody()
+            </div><!-- Footer Start -->
+            <div class="flex-grow-1"></div>
+
+            <!-- fotter end -->
+        </div>
+    </div><!-- ============ Search UI Start ============= -->
+    <div class="search-ui">
+        <div class="search-header">
+            <img src="~/dist-assets/images/logo.png" alt="" class="logo">
+            <button class="search-close btn btn-icon bg-transparent float-right mt-2">
+                <i class="i-Close-Window text-22 text-muted"></i>
+            </button>
+        </div>
+        <input type="text" placeholder="Type here" class="search-input" autofocus>
+        <div class="search-title">
+            <span class="text-muted">Search results</span>
+        </div>
+        <div class="search-results list-horizontal">
+            <div class="list-item col-md-12 p-0">
+                <div class="card o-hidden flex-row mb-4 d-flex">
+                    <div class="list-thumb d-flex">
+                        <!-- TUMBNAIL -->
+                        <img src="~/dist-assets/images/products/headphone-1.jpg" alt="">
+                    </div>
+                    <div class="flex-grow-1 pl-2 d-flex">
+                        <div class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center flex-lg-row">
+                            <!-- OTHER DATA -->
+                            <a href="#" class="w-40 w-sm-100">
+                                <div class="item-title">Headphone 1</div>
+                            </a>
+                            <p class="m-0 text-muted text-small w-15 w-sm-100">Gadget</p>
+                            <p class="m-0 text-muted text-small w-15 w-sm-100">
+                                $300
+                                <del class="text-secondary">$400</del>
+                            </p>
+                            <p class="m-0 text-muted text-small w-15 w-sm-100 d-none d-lg-block item-badges">
+                                <span class="badge badge-danger">Sale</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="list-item col-md-12 p-0">
+                <div class="card o-hidden flex-row mb-4 d-flex">
+                    <div class="list-thumb d-flex">
+                        <!-- TUMBNAIL -->
+                        <img src="~/dist-assets/images/products/headphone-2.jpg" alt="">
+                    </div>
+                    <div class="flex-grow-1 pl-2 d-flex">
+                        <div class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center flex-lg-row">
+                            <!-- OTHER DATA -->
+                            <a href="#" class="w-40 w-sm-100">
+                                <div class="item-title">Headphone 1</div>
+                            </a>
+                            <p class="m-0 text-muted text-small w-15 w-sm-100">Gadget</p>
+                            <p class="m-0 text-muted text-small w-15 w-sm-100">
+                                $300
+                                <del class="text-secondary">$400</del>
+                            </p>
+                            <p class="m-0 text-muted text-small w-15 w-sm-100 d-none d-lg-block item-badges">
+                                <span class="badge badge-primary">New</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="list-item col-md-12 p-0">
+                <div class="card o-hidden flex-row mb-4 d-flex">
+                    <div class="list-thumb d-flex">
+                        <!-- TUMBNAIL -->
+                        <img src="~/dist-assets/images/products/headphone-3.jpg" alt="">
+                    </div>
+                    <div class="flex-grow-1 pl-2 d-flex">
+                        <div class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center flex-lg-row">
+                            <!-- OTHER DATA -->
+                            <a href="#" class="w-40 w-sm-100">
+                                <div class="item-title">Headphone 1</div>
+                            </a>
+                            <p class="m-0 text-muted text-small w-15 w-sm-100">Gadget</p>
+                            <p class="m-0 text-muted text-small w-15 w-sm-100">
+                                $300
+                                <del class="text-secondary">$400</del>
+                            </p>
+                            <p class="m-0 text-muted text-small w-15 w-sm-100 d-none d-lg-block item-badges">
+                                <span class="badge badge-primary">New</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="list-item col-md-12 p-0">
+                <div class="card o-hidden flex-row mb-4 d-flex">
+                    <div class="list-thumb d-flex">
+                        <!-- TUMBNAIL -->
+                        <img src="~/dist-assets/images/products/headphone-4.jpg" alt="">
+                    </div>
+                    <div class="flex-grow-1 pl-2 d-flex">
+                        <div class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center flex-lg-row">
+                            <!-- OTHER DATA -->
+                            <a href="#" class="w-40 w-sm-100">
+                                <div class="item-title">Headphone 1</div>
+                            </a>
+                            <p class="m-0 text-muted text-small w-15 w-sm-100">Gadget</p>
+                            <p class="m-0 text-muted text-small w-15 w-sm-100">
+                                $300
+                                <del class="text-secondary">$400</del>
+                            </p>
+                            <p class="m-0 text-muted text-small w-15 w-sm-100 d-none d-lg-block item-badges">
+                                <span class="badge badge-primary">New</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- PAGINATION CONTROL -->
+        <div class="col-md-12 mt-5 text-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination d-inline-flex">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <!-- ============ Search UI End ============= -->
+    <script src="~/dist-assets/js/ajax.js"></script>
+    <script src="~/dist-assets/js/plugins/jquery-3.3.1.min.js"></script>
+    <script src="~/dist-assets/js/plugins/bootstrap.bundle.min.js"></script>
+    <script src="~/dist-assets/js/plugins/perfect-scrollbar.min.js"></script>
+    <script src="~/dist-assets/js/scripts/script.min.js"></script>
+    @RenderSection("Scripts",false)
+    <script src="~/dist-assets/js/scripts/sidebar.large.script.min.js"></script>
+    <script src="~/dist-assets/js/plugins/echarts.min.js"></script>
+    <script src="~/dist-assets/js/scripts/echart.options.min.js"></script>
+    <script src="~/dist-assets/js/scripts/dashboard.v1.script.min.js"></script>
+</body>
+
+
+<!-- Mirrored from demos.ui-lib.com/gull/html/layout1/dashboard1.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 20 Jul 2020 19:30:38 GMT -->
+</html>

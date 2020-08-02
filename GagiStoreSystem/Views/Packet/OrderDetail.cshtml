@@ -1,0 +1,181 @@
+﻿@model GagiStoreSystem.Models.Order
+@{
+    var wasHandedOver = Model.OrderStatusId == Convert.ToInt32(GagiStoreSystem.Enums.OrderStatus.HandedOver);
+}
+<div class="col-md-12">
+    <div class="card mb-4">
+        <div class="card-body">
+            <h6 class="mb-3">Sifarişçinin detalları</h6>
+            <form action="@Url.Action("UpdateOrder","Packet")" method="post">
+                <div class="row row-xs">
+                    <input type="text" id="orderId" asp-for="Id" hidden />
+                    <div class="col-md-3">
+                        <input class="form-control" asp-for="ReceiverName" type="text" placeholder="Sifarişçinin adı">
+                    </div>
+                    <div class="col-md-3 mt-3 mt-md-0">
+                        <input class="form-control" asp-for="ReceiverSurname" type="text" placeholder="Sifarişçinin soyadı">
+                    </div>
+                    <div class="col-md-3 mt-3 mt-md-0">
+                        <input class="form-control" asp-for="Instagram" type="text" placeholder="Sifarişçinin instagramı">
+                    </div>
+                    <div class="col-md-3 mt-3 mt-md-0">
+                        <input class="form-control" asp-for="Phone" type="text" placeholder="Sifarişçinin telefonu">
+                    </div>
+                    <div class="col-md-3 mt-3 my-2">
+                        <input class="form-control" asp-for="OrderDate" type="date" placeholder="Sifariş qeydə alındığı gün">
+                    </div>
+                    <div class="col-md-3 mt-3 my-2">
+                        <textarea class="form-control" asp-for="Note" placeholder="Sifariş  haqqında məlumat"></textarea>
+                    </div>
+                    @if (!wasHandedOver)
+                    {
+                        <div id="submit-order-info" class="col-md-2 my-3">
+                            <button type="submit" class="btn btn-primary btn-block">Yadda saxla</button>
+                        </div>
+                    }
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12">
+    <div class="card mb-4">
+        <div class="card-body">
+            <h6 class="mb-3">Sifarişin detalları</h6>
+            @if (!wasHandedOver)
+            {
+                <div id="add-order-detail-form" class="row row-xs">
+                    <div class="col-md-3">
+                        <select class="form-control" id="barcode">
+                            <option value="0">--</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mt-3 mt-md-0">
+                        <input id="count"  class="form-control" type="number" placeholder="Miqdar">
+                    </div>
+                    <div class="col-md-3 mt-3 mt-md-0">
+                        <input id="saleamount"  class="form-control" type="number" placeholder="Satış qiyməti">
+                    </div>
+                    <div class="col-md-3 mt-3 mt-md-0">
+                        <input id="discount"  class="form-control" type="number" placeholder="Endirim">
+                    </div>
+                    <div class="col-md-3 mt-3 my-2">
+                        <textarea id="note" class="form-control" placeholder="Məhsul barede qeyd (razmer və s)"></textarea>
+                    </div>
+                    <div class="col-md-2 my-3">
+                        <button id="add-order-details-button" class="btn btn-primary btn-block">Əlavə et</button>
+                    </div>
+                </div>
+            }
+
+            <div class="table-responsive">
+                <table style="min-width:1200px" class="table table-bordered table-dark">
+                    <thead>
+                        <tr>
+                            <th scope="col">Şəkli</th>
+                            <th scope="col">Məhsulun kodu</th>
+                            <th scope="col">Məhsulun sayı</th>
+                            <th scope="col">Endirim</th>
+                            <th scope="col">Toplam</th>
+                            <th scope="col">Qeyd</th>
+                            <th scope="col">Vəziyyəti</th>
+                            <th scope="col">Parametrlər</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.OrderDetails)
+                        {
+                            <tr>
+                                <td>
+                                    <img style="width:100px;height:100px;" src="~/uploads/products/@item.Product.Photo" alt="photo" />
+                                </td>
+                                <td>@item.Product.Barcode</td>
+                                <td>@item.Count</td>
+                                <td>@(item.TotalDiscount!=0?item.TotalDiscount.ToString("#.##"):"0") AZN</td>
+                                <td>@(item.TotalAmount!=0?item.TotalAmount.ToString("#.##"):"0") AZN</td>
+                                <td>@item.Note</td>
+                                <td>
+                                    @if (item.OrderDetailStatusId == Convert.ToInt32(GagiStoreSystem.Enums.OrderDetailStatus.Waiting))
+                                    {
+                                        <span class="badge badge-danger">Gözləmədə</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-success">Təhvil verildi</span>
+                                    }
+                                </td>
+                                <td>
+                                    <button class="btn btn-danger" type="button"><i class="nav-icon i-Close-Window"></i></button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            AjaxCaller("/product/getProductBarcodes", "get", null, GetBarcodesSuccess, GetBarcodesError, false)
+
+            function GetBarcodesSuccess(response, loader) {
+                for (var data of response.data) {
+                    let option = `<option value="${data.productId}">${data.barcode}</option>`;
+                    $("#barcode").append(option);
+                }
+            }
+
+            function GetBarcodesError(response, loader) {
+                alert('Xeta bas verdi!');
+            }
+
+            $("#barcode").change(function () {
+                if ($(this).val() != 0) {
+                    $("#count").val("0");
+                    $("#note").val("");
+                    $("#saleAmount").val("0");
+                    $("#discount").val("0");
+
+                    AjaxCaller("/product/getProductPriceById/?productId=" + $(this).val(), "get", null, GetProductPriceByIdSuccess, GetProductPriceByIdError);
+                }
+            });
+
+            function GetProductPriceByIdSuccess(response, loader) {
+                loader.remove();
+                $("#saleamount").val(response.data.saleAmount);
+            }
+
+            function GetProductPriceByIdError(response, loader) {
+                loader.remove();
+                alert("Xeta bas verdi");
+            }
+
+            $("#add-order-details-button").click(function () {
+                if ($("#barcode").val() != 0) {
+                    var obj = {
+                        ProductId: $("#barcode").val(),
+                        Count: $("#count").val(),
+                        Disocunt: $("#discount").val(),
+                        Note: $("#note").val()
+                    };
+
+                    AjaxCaller("/packet/addOrderDetail/?orderId=" + $("#orderId").val(), "post", obj, AddOrderDetailSuccess, AddOrderDetailError);
+                }
+            })
+
+
+            function AddOrderDetailSuccess() {
+                window.location.reload();
+            }
+
+            function AddOrderDetailError(res, loader) {
+                loader.remove();
+                alert("Xeta bas verdi");
+            }
+        })
+    </script>
+}

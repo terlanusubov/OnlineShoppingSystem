@@ -1,0 +1,21 @@
+﻿@model GagiStoreSystem.Infrastructure.Models.PacketM
+<div class="col-md-12">
+    <h4>Yeni bağlama əlavə et</h4>
+    <p>Məlumatları düzgün daxil edin.</p>
+    <div class="card mb-5">
+        <div class="card-body">
+            <div class="d-flex flex-column">
+                <form action="@Url.Action("Add","Packet")" method="post">
+                    <div asp-validation-summary="ModelOnly"></div>
+                    <div class="form-group">
+                        <input asp-for="TrackingNumber" class="form-control" type="text" placeholder="Bağlamanın izləmə kodu">
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="TrackingLink" class="form-control" type="text" placeholder="Bağlamanın izləmə linki">
+                    </div>
+                    <button type="submit" class="btn btn-primary pd-x-20">Əlavə et</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

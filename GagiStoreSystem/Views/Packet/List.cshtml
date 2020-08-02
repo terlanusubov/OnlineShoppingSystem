@@ -1,0 +1,60 @@
+﻿@model List<GagiStoreSystem.Models.Packet>
+<div class="col-md-12 mb-3">
+    <div class="card text-left">
+        <div class="card-body">
+            <h4 class="card-title mb-3"> Bağlamalar </h4>
+            <p>Bir "tracking number" ilə eyni zamanda sadəcə bir bağlama yaradın.</p>
+            <button class="btn btn-primary ripple m-1" type="button">
+                <a style="color:white;" href="@Url.Action("Add","Packet")">
+                    Yeni bağlama əlavə et
+                </a>
+            </button>
+            <div class="table-responsive">
+                <table style="min-width:1200px" class="table table-bordered table-dark">
+                    <thead>
+                        <tr>
+                            <th scope="col">Bağlamanın kodu</th>
+                            <th scope="col">Sifarişçilərin ad və soyadı</th>
+                            <th scope="col">Məhsul sayı</th>
+                            <th scope="col">Endirim</th>
+                            <th scope="col">Toplam</th>
+                            <th scope="col">Vəziyyət</th>
+                            <th scope="col">Parametrlər</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <th scope="row">@item.TrackingNumber</th>
+                            <td>
+                                @foreach (var order in item.Orders)
+                                {
+                                    <p>@order.ReceiverName @order.ReceiverSurname</p>
+                                }
+                            </td>
+                            <td>@item.Orders.Sum(c=>c.OrderDetails.Sum(a=>a.Count))</td>
+                            <td>@(item.Orders.Sum(c=>c.TotalDiscount)!=0? item.Orders.Sum(c => c.TotalDiscount).ToString("#.##"):"0") AZN</td>
+                            <td>@(item.Orders.Sum(c => c.TotalAmount) != 0? item.Orders.Sum(c => c.TotalAmount).ToString("#.##"):"0") AZN</td>
+                            <td>
+                                @if (item.PacketStatusId == Convert.ToInt32(GagiStoreSystem.Enums.PacketStatus.OnHold))
+                                {
+                                    <span class="badge badge-danger">Gözləmədə</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-success">Təhvil verildi</span>
+                                }
+                            </td>
+                            <td>
+                                <button class="btn btn-success" type="button"><a href="@Url.Action("Edit","Packet",new { packetId = item.Id})"><i class="nav-icon i-Pen-2"></i></a></button>
+                                <button class="btn btn-danger" type="button"><i class="nav-icon i-Close-Window"></i></button>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

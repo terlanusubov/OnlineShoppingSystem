@@ -1,0 +1,63 @@
+﻿@model GagiStoreSystem.Models.Packet
+<div class="col-md-12 mb-3">
+    <div class="card text-left">
+        <div class="card-body">
+            <h4 class="card-title mb-3">Sifarişlər</h4>
+            <button class="btn btn-primary ripple m-1" type="button">
+                <a style="color:white;" href="@Url.Action("AddOrder","Packet",new { packetId = ViewBag.PacketId })">
+                    Yeni sifariş əlavə et
+                </a>
+            </button>
+            <div class="table-responsive">
+                <table style="min-width:1200px;" class="table table-bordered">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Ad və Soyad</th>
+                            <th scope="col">Məhsulun kodu</th>
+                            <th scope="col">Məhsulun sayı</th>
+                            <th scope="col">Endirim</th>
+                            <th scope="col">Toplam</th>
+                            <th scope="col">Qeydlər</th>
+                            <th scope="col">Parametrlər</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Orders)
+                        {
+                            <tr>
+                                <td>@item.ReceiverName @item.ReceiverSurname</td>
+                                <td>
+                                    @if (item.OrderDetails.Count == 0)
+                                    {
+                                        <p>Məhsul alınmayıb</p>
+                                    }
+                                    @foreach (var orderDetail in item.OrderDetails)
+                                    {
+                                        <a href="@Url.Action("Details","Product",new { productId = orderDetail.ProductId})">@orderDetail.Product.Barcode</a>
+                                    }
+                                </td>
+                                <td>@item.OrderDetails.Sum(c=>c.Count)</td>
+                                <td>@(item.TotalDiscount !=0?item.TotalDiscount.ToString("#.##"):"0") AZN</td>
+                                <td>@(item.TotalAmount !=0?item.TotalAmount.ToString("#.##"):"0") AZN</td>
+                                <td>
+                                    @if (item.Note == null)
+                                    {
+                                        <p>Yoxdur</p>
+                                    }
+                                    else
+                                    {
+                                        <p>@item.Note</p>
+                                    }
+                                </td>
+                                <td>
+                                    <button class="btn btn-success" type="button"><a href="@Url.Action("OrderDetail","Packet",new { orderId = item.Id})"><i class="nav-icon i-Pen-2"></i></a></button>
+                                    <button class="btn btn-danger" type="button"><i class="nav-icon i-Close-Window"></i></button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

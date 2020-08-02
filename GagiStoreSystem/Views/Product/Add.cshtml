@@ -1,0 +1,42 @@
+﻿@model GagiStoreSystem.Infrastructure.Models.ProductM
+<div class="col-md-12">
+    <h4>Yeni məhsul əlavə et</h4>
+    <p>Məlumatları düzgün daxil edin.</p>
+    <div class="card mb-5">
+        <div class="card-body">
+            <div class="d-flex flex-column">
+                <form action="@Url.Action("Add","Product")" method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly"></div>
+                    <div class="form-group">
+                        <input asp-for="Name" class="form-control" type="text" placeholder="Məhsulun adı">
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="Barcode" class="form-control" type="text" placeholder="Məhsulun kodu">
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="Link" class="form-control" type="text" placeholder="Məhsulun linki">
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="BuyAmountWithTurk" class="form-control" type="text" placeholder="Məhsulun turk lirəsi ilə qiyməti">
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="BuyAmount" class="form-control" type="text" placeholder="Məhsulun alış qiyməti">
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="CostAmount" class="form-control" type="text" placeholder="Məhsulun maya dəyəri">
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="SaleAmount" class="form-control" type="text" placeholder="Məhsulun satış qiyməti">
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="Photo" class="form-control" type="file" placeholder="Məhsulun şəkli">
+                    </div>
+                    <div class="form-group">
+                        <textarea  asp-for="Specifications" class="form-control" rows="5" cols="10" placeholder="Məhsulun xüsusiyyətləri"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary pd-x-20">Əlavə et</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
