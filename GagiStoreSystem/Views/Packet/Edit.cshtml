@@ -18,6 +18,7 @@
                             <th scope="col">Endirim</th>
                             <th scope="col">Toplam</th>
                             <th scope="col">Qeydlər</th>
+                            <th scope="col">Status</th>
                             <th scope="col">Parametrlər</th>
                         </tr>
                     </thead>
@@ -47,6 +48,16 @@
                                     else
                                     {
                                         <p>@item.Note</p>
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.OrderStatusId == Convert.ToInt32(GagiStoreSystem.Enums.OrderStatus.Waiting))
+                                    {
+                                        <span class="badge badge-danger">Gözləmədə</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-success">Təhvil verildi</span>
                                     }
                                 </td>
                                 <td>

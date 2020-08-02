@@ -181,5 +181,19 @@ namespace GagiStoreSystem.Controllers
                 status = 200
             });
         }
+        [HttpPost]
+        public async Task<JsonResult> UpdateStatusOfOrderDetail(int? orderDetailId,int? status)
+        {
+            if (orderDetailId == null || status == null)
+                return Json(new { status = 400 });
+
+            var orderDetail = await _context.OrderDetails.Where(c => c.Id == orderDetailId && c.OrderDetailStatusId == Convert.ToInt32(OrderDetailStatus.Waiting)).FirstOrDefaultAsync();
+            if (orderDetail == null)
+                return Json(new { status = 400 });
+
+            orderDetail.OrderDetailStatusId = (int)status;
+            await _context.SaveChangesAsync();
+            return Json(new { status = 200 });
+        }
     }
 }

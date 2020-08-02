@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Desktop\\GagiStoreSystem\\GagiStoreSystem\\GagiStoreSystem.csproj": {}
+    "D:\\OnlineShoppingSystem\\OnlineShoppingSystem\\GagiStoreSystem\\GagiStoreSystem.csproj": {}
   },
   "projects": {
-    "D:\\Desktop\\GagiStoreSystem\\GagiStoreSystem\\GagiStoreSystem.csproj": {
+    "D:\\OnlineShoppingSystem\\OnlineShoppingSystem\\GagiStoreSystem\\GagiStoreSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Desktop\\GagiStoreSystem\\GagiStoreSystem\\GagiStoreSystem.csproj",
+        "projectUniqueName": "D:\\OnlineShoppingSystem\\OnlineShoppingSystem\\GagiStoreSystem\\GagiStoreSystem.csproj",
         "projectName": "GagiStoreSystem",
-        "projectPath": "D:\\Desktop\\GagiStoreSystem\\GagiStoreSystem\\GagiStoreSystem.csproj",
-        "packagesPath": "C:\\Users\\Tarlan Usubov\\.nuget\\packages\\",
-        "outputPath": "D:\\Desktop\\GagiStoreSystem\\GagiStoreSystem\\obj\\",
+        "projectPath": "D:\\OnlineShoppingSystem\\OnlineShoppingSystem\\GagiStoreSystem\\GagiStoreSystem.csproj",
+        "packagesPath": "C:\\Users\\tarlan.usubov\\.nuget\\packages\\",
+        "outputPath": "D:\\OnlineShoppingSystem\\OnlineShoppingSystem\\GagiStoreSystem\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Tarlan Usubov\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\tarlan.usubov\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -79,7 +79,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
         }
       }
     }

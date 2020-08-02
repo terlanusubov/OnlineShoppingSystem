@@ -8,27 +8,28 @@
             <h6 class="mb-3">Sifarişçinin detalları</h6>
             <form action="@Url.Action("UpdateOrder","Packet")" method="post">
                 <div class="row row-xs">
-                    <input type="text" id="orderId" asp-for="Id" hidden />
-                    <div class="col-md-3">
-                        <input class="form-control" asp-for="ReceiverName" type="text" placeholder="Sifarişçinin adı">
-                    </div>
-                    <div class="col-md-3 mt-3 mt-md-0">
-                        <input class="form-control" asp-for="ReceiverSurname" type="text" placeholder="Sifarişçinin soyadı">
-                    </div>
-                    <div class="col-md-3 mt-3 mt-md-0">
-                        <input class="form-control" asp-for="Instagram" type="text" placeholder="Sifarişçinin instagramı">
-                    </div>
-                    <div class="col-md-3 mt-3 mt-md-0">
-                        <input class="form-control" asp-for="Phone" type="text" placeholder="Sifarişçinin telefonu">
-                    </div>
-                    <div class="col-md-3 mt-3 my-2">
-                        <input class="form-control" asp-for="OrderDate" type="date" placeholder="Sifariş qeydə alındığı gün">
-                    </div>
-                    <div class="col-md-3 mt-3 my-2">
-                        <textarea class="form-control" asp-for="Note" placeholder="Sifariş  haqqında məlumat"></textarea>
-                    </div>
                     @if (!wasHandedOver)
                     {
+                        <input type="text" id="orderId" asp-for="Id" hidden />
+                        <div class="col-md-3">
+                            <input class="form-control" asp-for="ReceiverName" type="text" placeholder="Sifarişçinin adı">
+                        </div>
+                        <div class="col-md-3 mt-3 mt-md-0">
+                            <input class="form-control" asp-for="ReceiverSurname" type="text" placeholder="Sifarişçinin soyadı">
+                        </div>
+                        <div class="col-md-3 mt-3 mt-md-0">
+                            <input class="form-control" asp-for="Instagram" type="text" placeholder="Sifarişçinin instagramı">
+                        </div>
+                        <div class="col-md-3 mt-3 mt-md-0">
+                            <input class="form-control" asp-for="Phone" type="text" placeholder="Sifarişçinin telefonu">
+                        </div>
+                        <div class="col-md-3 mt-3 my-2">
+                            <input class="form-control" asp-for="OrderDate" type="date" placeholder="Sifariş qeydə alındığı gün">
+                        </div>
+                        <div class="col-md-3 mt-3 my-2">
+                            <textarea class="form-control" asp-for="Note" placeholder="Sifariş  haqqında məlumat"></textarea>
+                        </div>
+
                         <div id="submit-order-info" class="col-md-2 my-3">
                             <button type="submit" class="btn btn-primary btn-block">Yadda saxla</button>
                         </div>
@@ -53,13 +54,13 @@
                         </select>
                     </div>
                     <div class="col-md-3 mt-3 mt-md-0">
-                        <input id="count"  class="form-control" type="number" placeholder="Miqdar">
+                        <input id="count" class="form-control" type="number" placeholder="Miqdar">
                     </div>
                     <div class="col-md-3 mt-3 mt-md-0">
-                        <input id="saleamount"  class="form-control" type="number" placeholder="Satış qiyməti">
+                        <input id="saleamount" class="form-control" type="number" placeholder="Satış qiyməti">
                     </div>
                     <div class="col-md-3 mt-3 mt-md-0">
-                        <input id="discount"  class="form-control" type="number" placeholder="Endirim">
+                        <input id="discount" class="form-control" type="number" placeholder="Endirim">
                     </div>
                     <div class="col-md-3 mt-3 my-2">
                         <textarea id="note" class="form-control" placeholder="Məhsul barede qeyd (razmer və s)"></textarea>
@@ -101,18 +102,32 @@
                                     {
                                         <span class="badge badge-danger">Gözləmədə</span>
                                     }
+                                    else if (item.OrderDetailStatusId == Convert.ToInt32(GagiStoreSystem.Enums.OrderDetailStatus.Rejected))
+                                    {
+                                        <span class="badge badge-warning">Qaytarıldı</span>
+                                    }
                                     else
                                     {
                                         <span class="badge badge-success">Təhvil verildi</span>
                                     }
                                 </td>
-                                <td>
-                                    <button class="btn btn-danger" type="button"><i class="nav-icon i-Close-Window"></i></button>
-                                </td>
+                                @if (item.OrderDetailStatusId == Convert.ToInt32(GagiStoreSystem.Enums.OrderDetailStatus.Waiting))
+                                {
+                                    <td>
+                                        <button class="btn btn-danger change-status" type="button" data-id="@item.Id" data-status="0">Sil</button>
+                                        <button class="btn btn-success change-status" type="button" data-id="@item.Id" data-status="20">Təhvil verildi</button>
+                                        <button class="btn btn-warning change-status" type="button" data-id="@item.Id" data-status="30">Qaytarıldı</button>
+                                    </td>
+                                }
                             </tr>
                         }
                     </tbody>
                 </table>
+            </div>
+            <div class="col-12">
+                <button class="btn btn-primary ripple m-1" type="button">
+                    Sifarişi bitir
+                </button>
             </div>
         </div>
     </div>
@@ -175,6 +190,26 @@
             function AddOrderDetailError(res, loader) {
                 loader.remove();
                 alert("Xeta bas verdi");
+            }
+
+
+            $(".change-status").click(function () {
+                if ($(this).data("status") != 0) {
+                    var orderDetailId = $(this).data("id");
+                    var status = $(this).data("status");
+                    AjaxCaller("/packet/updateStatusOfOrderDetail/?orderDetailId=" + orderDetailId + "&status=" + status, "post", null, UpdateStatusOfOrderDetailSuccess, UpdateStatusOfOrderDetailError);
+
+                }
+            });
+
+            function UpdateStatusOfOrderDetailSuccess() {
+                window.location.reload();
+            }
+
+
+            function UpdateStatusOfOrderDetailError(res, loader) {
+                loader.remove();
+                alert("xeta bas verdi!");
             }
         })
     </script>
